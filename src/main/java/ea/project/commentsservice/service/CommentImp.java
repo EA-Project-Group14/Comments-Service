@@ -35,6 +35,10 @@ public class CommentImp implements CommentSer{
     public void delete(int commentId) {
        commentsRepository.deleteById(commentId);
     }
+    @Override
+    public void deleteAllByPostId(int postId){
+        commentsRepository.deleteAllByPostId(postId);
+    }
 
     @Override
     public Comment update(Comment comment) {
