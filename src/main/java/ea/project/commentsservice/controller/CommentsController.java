@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
+@RequestMapping("/comments")
 public class CommentsController {
 
     @Autowired
@@ -27,26 +28,24 @@ public class CommentsController {
     CommentsRepository commentsRepository;
 
 
-    @GetMapping("/comments/{postId}")
+    @GetMapping("/{postId}")
     public List<Comment> getCommentsByPostId(@PathVariable("postId") Integer postId) {
        return commentSer.getAllCommentFromPost(postId);
     }
 
 
-    @PostMapping(
-            "/comments/update")
+    @PostMapping("/update")
     public Comment updateComment(@RequestBody Comment comment) {
         return commentSer.update(comment);
     }
 
 
-    @DeleteMapping("/comments/delete/{commentid}")
+    @DeleteMapping("/delete/{commentid}")
     public void deleteComment(@PathVariable("commentid") int commentid) {
         commentSer.delete(commentid);
     }
 
-    @PostMapping(
-            "/comments/add")
+    @PostMapping("/add")
     public void addComment(@RequestBody Comment comment) {
         commentSer.save(comment);
     }
