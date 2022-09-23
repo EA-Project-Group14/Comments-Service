@@ -9,4 +9,5 @@ public interface CommentSer {
     List<Comment> getAllCommentFromPost(int postId);
     void delete(int commentId);
     Comment update(Comment comment);
+    void deleteAllByPostId(int postId);
 }
