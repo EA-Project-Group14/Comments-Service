@@ -35,6 +35,12 @@ public class CommentsController {
     public void deleteComment(@PathVariable("commentId") Long commentId) {
         commentService.delete(commentId);
     }
+    
+    @DeleteMapping("/comments/delete/all/{postId}")
+    @Transactional
+    public void deleteCommentsByPostId(@PathVariable("postId") int postId) {
+        commentSer.deleteAllByPostId(postId);
+    }
 
     @PostMapping
     public void addComment(@RequestBody CommentDto commentDto) {
