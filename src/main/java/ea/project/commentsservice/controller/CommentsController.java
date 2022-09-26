@@ -1,20 +1,14 @@
 package ea.project.commentsservice.controller;
 
 
-import com.mysql.cj.jdbc.exceptions.MySQLQueryInterruptedException;
 import ea.project.commentsservice.domain.Comment;
+import ea.project.commentsservice.dto.CommentDto;
 import ea.project.commentsservice.repository.CommentsRepository;
-import ea.project.commentsservice.service.CommentSer;
+import ea.project.commentsservice.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -22,34 +16,30 @@ import java.util.List;
 public class CommentsController {
 
     @Autowired
-    private CommentSer commentSer;
+    private CommentService commentService;
 
     @Autowired
     CommentsRepository commentsRepository;
 
-
-    @GetMapping("/{postId}")
-    public List<Comment> getCommentsByPostId(@PathVariable("postId") Integer postId) {
-       return commentSer.getAllCommentFromPost(postId);
+    @GetMapping(params = "postId")
+    public List<Comment> getCommentsByPostId(Long postId) {
+       return commentService.getAllCommentFromPost(postId);
     }
 
-
-    @PostMapping("/update")
-    public Comment updateComment(@RequestBody Comment comment) {
-        return commentSer.update(comment);
+    @PutMapping("/{commentId}")
+    public Comment updateComment(@PathVariable Long commentId, @RequestBody CommentDto commentDto) {
+        return commentService.update(commentId, commentDto);
     }
 
-
-    @DeleteMapping("/delete/{commentid}")
-    public void deleteComment(@PathVariable("commentid") int commentid) {
-        commentSer.delete(commentid);
+    @DeleteMapping("/{commentId}")
+    public void deleteComment(@PathVariable("commentId") Long commentId) {
+        commentService.delete(commentId);
     }
 
-    @PostMapping("/add")
-    public void addComment(@RequestBody Comment comment) {
-        commentSer.save(comment);
+    @PostMapping
+    public void addComment(@RequestBody CommentDto commentDto) {
+        commentService.save(commentDto);
     }
-
 
     @FeignClient("PostsSrvice")
     interface AccountFeignClient {
