@@ -5,6 +5,7 @@ import ea.project.commentsservice.dto.CommentDto;
 import ea.project.commentsservice.repository.CommentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
+@Transactional
 public class CommentServiceImpl implements CommentService {
 
     @Autowired
