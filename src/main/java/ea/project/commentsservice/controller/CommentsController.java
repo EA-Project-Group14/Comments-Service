@@ -36,9 +36,9 @@ public class CommentsController {
         commentService.delete(commentId);
     }
     
-    @DeleteMapping("/comments/delete/all/{postId}")
-    public void deleteCommentsByPostId(@PathVariable("postId") Long postId) {
-        commentService.getAllCommentFromPost(postId);
+    @DeleteMapping(params = "postId")
+    public void deleteCommentsByPostId(@RequestParam Long postId) {
+        commentService.deletePostComments(postId);
     }
 
     @PostMapping
